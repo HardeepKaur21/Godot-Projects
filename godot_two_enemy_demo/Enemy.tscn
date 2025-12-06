@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvdkdvg7xlci4"]
+
+[ext_resource type="Script" path="res://Enemy.gd" id="1_3o814"]
+[ext_resource type="Texture2D" uid="uid://3j32nkl0ay10" path="res://Cobra Sprite Sheet.png" id="2_0lych"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ss2he"]
+radius = 106.0
+height = 256.0
+
+[sub_resource type="Animation" id="Animation_gnf30"]
+resource_name = "hurt"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.6, 1.1, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 25, 26, 27]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g2y3x"]
+_data = {
+"hurt": SubResource("Animation_gnf30")
+}
+
+[node name="Enemy" type="Area2D"]
+script = ExtResource("1_3o814")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -8)
+shape = SubResource("CapsuleShape2D_ss2he")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(52, -89)
+scale = Vector2(12.747, 11.1063)
+texture = ExtResource("2_0lych")
+hframes = 8
+vframes = 5
+frame = 27
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g2y3x")
+}
+
+[node name="Sprite2D 2" type="Sprite2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
